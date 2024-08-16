@@ -436,6 +436,7 @@ input{
 }
 
 .back_forward_icon{
+    width: 68%;
     display: flex;
     gap: 5px;
 }
@@ -592,34 +593,6 @@ input{
 }
 
 
-.search-header{
-    height: 107px;
-    /* background-color: red; */
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    position: sticky;
-    top: 0;
-}
-
-.search-header h1{
-    margin-left: 10px;
-    height: 38.5px;
-    width: 80%;
-    margin: 0 14px;
-    font-size: 32px;
-}
-.search-header input{
-    height: 38.5px;
-    margin: 5px 10px;
-    border-radius: 30px;
-    border: none;
-    font-weight: 500;
-    font-size: large;
-    width: 600px;
-}
-
 input[type="text"]{
     color: white;
     letter-spacing: 1px;
@@ -629,3 +602,18 @@ input[type="text"]{
     cursor: text;
 }
 
+.search_song{
+    /* background-color: blue; */
+    width: 63%;
+    height: 40px;
+    /* height: 80%; */
+    margin: 0 18px;
+}
+
+.search_song input{
+    height: 100%;
+    margin: 0;
+    border: none;
+    border-radius: 20px;
+    font-size: large;
+}

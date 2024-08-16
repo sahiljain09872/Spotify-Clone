@@ -15,6 +15,13 @@
         rel="stylesheet">
     <link rel="icon" href="./assets/logo.png">
     <link rel="stylesheet" href="project.css">
+    <!-- <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="utilities.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="pages.css"> -->
     <link rel="stylesheet" href="utility.css">
 </head>
 
@@ -34,7 +41,7 @@
         </div>
         <div class="second-section">
             <div class="content">
-                <%- include("includes/content-header.ejs") %>
+                <%- include("includes/content-header.ejs" , {title : data.name}) %>
 
                 <%- include(`includes/${data.name}.ejs`) %>
             </div>

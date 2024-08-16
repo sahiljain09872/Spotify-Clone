@@ -3,7 +3,13 @@
         <div class="back_forward_icon">
             <button><i class="fa-solid fa-angle-left"></i></button>
             <button><i class="fa-solid fa-angle-right"></i></button>
+            <% if(title == "search-content"){ %>
+                <div class="search_song">
+                    <input type="text" placeholder="Search Song">
+                </div>
+            <% } %>
         </div>
+        
 
         <div class="marketing">
             <button class="premium hover_came_out button white_button">
