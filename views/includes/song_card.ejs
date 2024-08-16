@@ -1,0 +1,19 @@
+<div class="card <%= song %> >" song_name="<%= song %>">
+  <div class="card-img-top" style="position: relative">
+    <img
+      class=""
+      src="./assets/<%= song %>.jpeg"
+      alt=""
+      style="width: 100%; height: 150px"
+    />
+    <div class="play_button hover_came_out" song_name="<%= song %>">
+      <button>
+        <i class="fa-solid fa-play"></i>
+      </button>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="card-title song-title"><%= song %></div>
+    <div class="card-text Movie Name"><%= description %></div>
+  </div>
+</div>
