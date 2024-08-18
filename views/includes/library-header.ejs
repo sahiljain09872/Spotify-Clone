@@ -1,15 +1,16 @@
 <div class="header">
     <div class="your_l_add_ex">
-        <div class="your_library_button full_opac">
+        <form class="yourlibrary full_opac" action="/yourlibrary" method="GET">
             <label for="Your_library_link" class="your_library_icon icon">
                 <!-- <i class="fa-brands fa-stack-exchange"></i> -->
                 <img src="./assets/your_library.svg" alt="">
             </label>
 
             <div class="your_library_link" id="Your_library_link">
-                <a class="link" href="#">Your Library</a>
+                <button id="your_library_button" type="submit" class="link">Your Library</button>
             </div>
-        </div>
+
+        </form>
         <div class="add-expand">
             <button class="add_button hover_effect">
                 <i class="fa-solid fa-plus"></i>

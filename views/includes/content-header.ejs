@@ -1,33 +1,44 @@
 <div class="main_content_header">
     <div class="marketing_profile">
-        <div class="back_forward_icon">
-            <button><i class="fa-solid fa-angle-left"></i></button>
-            <button><i class="fa-solid fa-angle-right"></i></button>
-            <% if(title == "search-content"){ %>
-                <div class="search_song">
-                    <input type="text" placeholder="Search Song">
-                </div>
-            <% } %>
-        </div>
-        
-
-        <div class="marketing">
-            <button class="premium hover_came_out button white_button">
-                Explore Premium
-            </button>
-
-            <button class="install_app hover_came_out button">
-                Install APP
-            </button>
-
-            <button class="bell hover_came_out button">
-                <i class="fa-solid fa-bell"></i>
-            </button>
-
-            <button class="profile hover_came_out button">
-                <i class="fa-solid fa-user"></i>
-            </button>
-        </div>
+      <div class="back_forward_icon">
+        <button><i class="fa-solid fa-angle-left"></i></button>
+        <button><i class="fa-solid fa-angle-right"></i></button>
+        <% if(title == "search-content"){ %>
+        <form class="search_song" style="width: 280px" action="/search">
+          <input type="text" placeholder="Search Song" style="width: 60%" name="song" />
+  
+          <!-- here we will put a search button (green layout) -->
+          <button
+            type="submit"
+            class="hover_effect"
+            style="width: 30%; border-radius: 20px; background-color: green"
+          >
+            Search
+          </button>
+        </form>
+        <% } %>
+      </div>
+  
+      <div class="marketing">
+        <button class="premium hover_came_out button white_button">
+          Explore Premium
+        </button>
+  
+        <button class="install_app hover_came_out button">Install APP</button>
+  
+        <button class="bell hover_came_out button">
+          <i class="fa-solid fa-bell"></i>
+        </button>
+  
+        <button class="profile hover_came_out button">
+          <i class="fa-solid fa-user"></i>
+          <!-- <div class="dropdown-menu" id="dropdownMenu" style="z-index: 1000;">
+                      <a href="#">Profile</a>
+                      <a href="#">Settings</a>
+                      <a href="#">Log Out</a>
+                  </div> -->
+        </button>
+      </div>
     </div>
-
-</div>
+  </div>
+  

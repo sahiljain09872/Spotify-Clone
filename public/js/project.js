@@ -10,6 +10,8 @@ let curr_song_img = document.querySelector(".curr_song #image");
 let curr_song_name = document.querySelector(".curr_song #song_name");
 let curr_song_singers = document.querySelector(".curr_song #singers");
 
+let search_input = document.querySelector('.search_song input');
+
 let more_player_controls = document.querySelector(
   ".player_helper_controls .more"
 );
@@ -37,18 +39,18 @@ expand_button.addEventListener("click", () => {
 
 document.addEventListener("keydown", (event) => {
   console.log(event);
-  if (event.code == "Space") {
+  if (event.code == "Space" && document.activeElement !== search_input) {
     play_song.click();
-  } else if (event.code == "ArrowRight") {
+  } else if (event.code == "ArrowRight"  && document.activeElement !== search_input) {
     audio_player.currentTime += 5;
-  } else if (event.code == "ArrowLeft") {
+  } else if (event.code == "ArrowLeft"  && document.activeElement !== search_input) {
     audio_player.currentTime -= 5;
-  } else if (event.code == "ArrowUp") {
+  } else if (event.code == "ArrowUp"  && document.activeElement !== search_input) {
     if (audio_player.volume <= 0.95) {
       audio_player.volume += 0.05;
       volume_range.value = (parseFloat(volume_range.value) + 0.05).toFixed(2);
     }
-  } else if (event.code == "ArrowDown") {
+  } else if (event.code == "ArrowDown"  && document.activeElement !== search_input) {
     if (audio_player.volume >= 0.05) {
       audio_player.volume -= 0.05;
       volume_range.value = (parseFloat(volume_range.value) - 0.05).toFixed(2);
@@ -66,43 +68,57 @@ document.addEventListener("click", (event) => {
 
 // add the honey singh library in the library
 
-let artists_list = document.querySelector(".artists_list");
-let artist_name = "Honey Singh";
-let artist_type = "Rapper";
-let artist_image_source =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_j8TjXxehsVIB8K2sXrwMxAFRiUp6PacKyA&s";
+// Function to add an artist to the library list
+function addArtistToLibrary(libraryLists, artistDetails) {
+  // Create artist library container
+  const artistLibrary = document.createElement("div");
+  artistLibrary.classList.add("artist_library");
 
-function addInLibrary() {
-  let artist_library = document.createElement("div");
-  artist_library.classList.add("artist_library");
-  artists_list.appendChild(artist_library);
-  let artist_icon = document.createElement("div");
-  artist_icon.classList.add("artist_icon");
-  let artist_image = document.createElement("img");
-  artist_image.classList.add("artist_library_image");
-  artist_image.setAttribute("src", artist_image_source);
-  artist_icon.appendChild(artist_image);
-  artist_library.appendChild(artist_icon);
+  // Create and append artist image
+  const artistIcon = document.createElement("div");
+  artistIcon.classList.add("artist_icon");
+  
+  const artistImage = document.createElement("img");
+  artistImage.classList.add("artist_library_image");
+  artistImage.src = artistDetails.imageSource;
+  
+  artistIcon.appendChild(artistImage);
+  artistLibrary.appendChild(artistIcon);
 
-  let name_type = document.createElement("div");
-  name_type.classList.add("artist_title_sub");
-  artist_library.appendChild(name_type);
+  // Create and append artist name and type
+  const nameTypeContainer = document.createElement("div");
+  nameTypeContainer.classList.add("artist_title_sub");
+  
+  const artistName = document.createElement("div");
+  artistName.classList.add("library_artist_title");
+  artistName.innerText = artistDetails.name;
+  
+  const artistType = document.createElement("div");
+  artistType.classList.add("library_artist_sub");
+  artistType.innerText = artistDetails.type;
+  
+  nameTypeContainer.appendChild(artistName);
+  nameTypeContainer.appendChild(artistType);
+  
+  artistLibrary.appendChild(nameTypeContainer);
 
-  let newdiv = document.createElement("div");
-  name_type.appendChild(newdiv);
-
-  let artistname = document.createElement("div");
-  name_type.appendChild(artistname);
-  artistname.classList.add("library_artist_title");
-  artistname.innerText = artist_name;
-
-  let artisttype = document.createElement("div");
-  name_type.appendChild(artisttype);
-  artisttype.classList.add("library_artist_sub");
-  artisttype.innerText = artist_type;
+  // Append the artist library to each library list
+  libraryLists.forEach(libraryList => {
+    libraryList.appendChild(artistLibrary);
+  });
 }
 
-addInLibrary();
+// Example usage:
+const libraryLists = document.querySelectorAll(".library_list");
+
+const artistDetails = {
+  name: "Honey Singh",
+  type: "Rapper",
+  imageSource: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_j8TjXxehsVIB8K2sXrwMxAFRiUp6PacKyA&s"
+};
+
+addArtistToLibrary(libraryLists, artistDetails);
+
 
 /* songs
  */
@@ -268,3 +284,22 @@ let search = document.querySelector(".search");
 search.addEventListener("click", () => {
   console.log("search button has been clicked");
 });
+
+
+// Toggle the dropdown menu when the profile button is clicked
+// document.querySelector('.profile').addEventListener('click', function(event) {
+//   var dropdownMenu = document.getElementById('dropdownMenu');
+//   dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+// });
+
+// Close the dropdown menu if the user clicks outside of it
+// window.addEventListener('click', function(event) {
+//   var profileButton = document.querySelector('.profile');
+//   var dropdownMenu = document.getElementById('dropdownMenu');
+
+//   // Check if the click is outside the dropdown and profile button
+//   if (!profileButton.contains(event.target)) {
+//       dropdownMenu.style.display = 'none';
+//   }
+// });
+

@@ -32,3 +32,11 @@ app.get("/search" , (req ,res)=>{
 
     res.render("project.ejs" , {data : data})
 })
+
+app.get("/yourlibrary" , (req , res)=>{
+    const data = {
+        name : "your_library"
+    }
+
+    res.render("project.ejs" , {data : data})
+})
