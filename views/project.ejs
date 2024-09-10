@@ -36,14 +36,27 @@
 
                     <%- include("includes/library-header-bottom.ejs") %>
 
-                <%- include("includes/libraries.ejs") %>
+                <%- include("includes/libraries.ejs" , {libraries}) %>
             </div>
         </div>
         <div class="second-section">
             <div class="content">
-                <%- include("includes/content-header.ejs" , {title : data.name}) %>
+                <%- include("includes/content-header.ejs" , {title : name}) %>
 
-                <%- include(`includes/${data.name}.ejs`) %>
+                <% if(name == "home-content"){ %>
+                    <%- include(`includes/${name}.ejs` , {recentSongs}) %>
+                <% } %>
+                <% if(name == "search-content"){ %>
+                    <%- include(`includes/${name}.ejs` , {songs} , {recentSongs}) %>
+                <% } %>
+                <% if(name == "your_library"){ %>
+                    <%- include(`includes/${name}.ejs` , {libraries}) %>
+                <% } %>
+                <% if(name == "library"){ %>
+                    <%- include(`includes/${library}.ejs`, { libraries }) %>
+                <% } %>
+
+                <% console.log(name) %>
             </div>
             <%- include("includes/player.ejs") %>
         </div>
