@@ -4,14 +4,91 @@
     </div>
 
     <div class="artists_cards">
+        <!-- <div class="card Hauli_Hauli" song_name="Hauli_Hauli">
+            <div class="card-img-top" style="position: relative;">
+                <img class="" src="./assets/Hauli_Hauli.jpeg" alt="" style="width: 100%; height: 100%;">
+                <div class="play_button hover_came_out" song_name="Hauli_Hauli">
+                    <button>
+                        <i class="fa-solid fa-play"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="card-title song-title">
+                    Hauli Hauli
+                </div>
+                <div class="card-text Movie Name">
+                    Khel Khel Main
+                </div>
+            </div>
+        </div>
 
-        <%- include("song_card.ejs" , {song : "no_cap" , description:"Kalamkaar"}) %>
+        <div class="card no_cap" song_name="no_cap">
+            <div class="card-img-top" style="position: relative;">
+                <img class="" src="./assets/no_cap.jpg" alt="" style="width: 100%; height: 100%;">
+                <%- include("green_play.ejs" , { song: 'no_cap' }) %>
+            </div>
+            <div class="card-body">
+                <div class="card-title song-title">
+                    No Cap
+                </div>
+                <div class="card-text Movie Name">
+                    KR$NA
+                </div>
+            </div>
+        </div>
 
-        <%- include("song_card" ,{song:"Hauli_Hauli" , description : "khel khel main"}) %>
-        
-        <%- include("song_card" ,{song:"likhari_name" , description : "Harsh Likhari"}) %>
-        
-        
+        <div class="card likhari_name" song_name="likhari_name">
+            <div class="card-img-top" style="position: relative;">
+                <img class="" src="./assets/harsh_likhari.jpeg" alt="" style="width: 100%; height: 100%;">
+                <div class="play_button hover_came_out" song_name="likhari_name">
+                    <button>
+                        <i class="fa-solid fa-play"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="card-title song-title">
+                    likhari_name
+                </div>
+                <div class="card-text Movie Name">
+                    Hash Likhari
+                </div>
+            </div>
+        </div> -->
+
+        <% for(song of recentSongs){ %>
+            <div class="card <%= song.songName.split(" ").join(" _") %>" song_name="<%= song.songName.split(" ").join("_") %>" , song_id="<%= song._id %>">
+                        <div class="card-img-top" style="position: relative;">
+                            <img class="" src="<%= song.songImageUrl %>" alt="" style="width: 100%; height: 100%;">
+
+                            <!-- play button -->
+                            <div class="play_button hover_came_out" song_name="<%= song.songName.split(" ").join(" _")%>" style="position: absolute; bottom: 1px; right: 1px;">
+                                <button>
+                                    <i class="fa-solid fa-play"></i>
+                                </button>
+                            </div>
+
+                            <!-- like button -->
+                            <div class="like_button hover_came_out" song_name="<%= song.songName.split(' ').join('_') %>" style="position: absolute; bottom: 1px; left: 1px;">
+                                <button class="<%= song.like ? 'back-pink' : 'back-white' %>">
+                                    <i class="fa-solid fa-heart <%= song.like ? 'font-white' : 'font-pink' %>"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title song-title">
+                                <%= song.songName.split(" ").join(" _") %>
+                            </div>
+                            <div class="card-text Movie Name">
+                                <%= song.movie %>
+                            </div>
+                            <div class="card-text Singer Name">
+                                <%= song.singerName %>
+                            </div>
+                        </div>
+            </div>
+            <% }%>
     </div>
 
 </div>
