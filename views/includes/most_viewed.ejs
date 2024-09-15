@@ -1,0 +1,41 @@
+<div class="most_viewed_section section" style="height: auto;"></div>
+    <div class="section_title">
+        Most Viewed Songs
+    </div>
+
+    <div class="artists_cards" style="display: flex; flex-wrap: wrap;">
+        <% for(song of mostViewedSongs){ %>
+            <div class="card <%= song.songName.split(" ").join(" _") %>" song_name="<%= song.songName.split(" ").join("_") %>" , song_id="<%= song._id %>">
+                        <div class="card-img-top" style="position: relative;">
+                            <img class="" src="<%= song.songImageUrl %>" alt="" style="width: 100%; height: 100%;">
+
+                            <!-- play button -->
+                            <div class="play_button hover_came_out" song_name="<%= song.songName.split(" ").join(" _")%>" style="position: absolute; bottom: 1px; right: 1px;">
+                                <button>
+                                    <i class="fa-solid fa-play"></i>
+                                </button>
+                            </div>
+
+                            <!-- like button -->
+                            <div class="like_button hover_came_out" song_name="<%= song.songName.split(' ').join('_') %>" style="position: absolute; bottom: 1px; left: 1px;">
+                                <button class="<%= song.like ? 'back-pink' : 'back-white' %>">
+                                    <i class="fa-solid fa-heart <%= song.like ? 'font-white' : 'font-pink' %>"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-title song-title">
+                                <%= song.songName.split(" ").join(" _") %>
+                            </div>
+                            <div class="card-text Movie Name">
+                                <%= song.movie %>
+                            </div>
+                            <div class="card-text Singer Name">
+                                <%= song.singerName %>
+                            </div>
+                        </div>
+            </div>
+            <% }%>
+    </div>
+
+</div>

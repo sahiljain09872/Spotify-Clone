@@ -64,6 +64,7 @@
     background-color: #2d2c2cdd;
 }
 
+
 .artist_icon{
     position: absolute;
     left: 7px;
@@ -74,9 +75,7 @@
 }
 
 .section{
-    height: 400px;
     width: 100%;
-
 }
 
 .section_title{

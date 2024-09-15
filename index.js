@@ -9,6 +9,21 @@ const RecentSong = require("./models/recent_song.js");
 const Library = require("./models/library.js");
 
 
+async function recentSongs_func(){
+    const recentSongsRef = await RecentSong.find({}).sort({ playedAt: -1 }).limit(5);
+    // this will return array of recentSongsRef
+
+    let recentSongs = []
+
+    for(ref of recentSongsRef){
+        // now get the id of the recentSong
+        let song_id = ref.song;
+        let song =await Song.findById(song_id);
+        recentSongs.push(song);
+    }
+
+    return recentSongs;
+}
 
 
 const port = 8080;
@@ -33,72 +48,63 @@ app.listen( port , () =>{
 
 app.get(["/" , "/home" , "/index"] ,async (req ,res) => {
     const libraries = await Library.find({});
-    const recentSongs = await RecentSong.find({}).sort({ playedAt: -1 }).limit(5);
-    res.render("project.ejs" , {name : "home-content" , recentSongs : recentSongs , libraries:libraries});
+
+    const recentSongs = await recentSongs_func();
+
+    const mostViewedSongs = await Song.find({}).sort({views:-1}).limit(10);
+
+    res.render("project.ejs" , {name : "home-content" , recentSongs : recentSongs , libraries:libraries , mostViewedSongs:mostViewedSongs});
 })
 
 app.get("/search" ,async (req ,res)=>{
-    const data = {
-        name : "search-content"
-    }
+
     const libraries = await Library.find({});
 
-    const recentSongs = await RecentSong.find({}).sort({ playedAt: -1 }).limit(5);
+    const recentSongs = await recentSongs_func();
 
     res.render("project.ejs" , {name : "search-content" , songs:[] , recentSongs:recentSongs , libraries:libraries})
 })
-
-// app.get("/library/:title" ,async (req ,res)=>{
-//     const data = {
-//         name : "library"
-//     }
-//     const {title} = req.params;
-//     console.log(title);
-//     const libraries = await Library.find({});
-
-//     res.render("project.ejs" , {name : "library" , libraries:libraries})
-// })
 
 app.get("/searchSong" , async (req , res) =>{
     const {song : songName} = req.query;
 
     const songs = await Song.find({songName : `${songName.toLowerCase().trim()}`})
-    console.log(songs);
-    const recentSongs = await RecentSong.find({}).sort({ playedAt: -1 }).limit(5);
+
+    const recentSongs = await recentSongs_func();
+ 
     const libraries = await Library.find({});
 
-    // console.log(songs);
-
     res.render("project.ejs" , {name : "search-content" , songs:songs , recentSongs:recentSongs , libraries:libraries});
-    
 })
 
 app.get("/api/song/:id", async (req, res) => {
-    const { id } = req.params;
-    const song = await Song.findById(id);
-    // console.log(song);
-
+    try {
+        const { id } = req.params;
+        await Song.findByIdAndUpdate(`${id}` , { $inc: { views: 1 } })
     
-
-    if (song) {
-        // first findAndDelete the song if present in the db
-        await RecentSong.findByIdAndDelete(song._id);
-        await RecentSong.create({
-            _id:song._id,
-            songName: song.songName,
-            songImageUrl: song.songImageUrl,
-            singerImageUrl: song.singerImageUrl,
-            songMP3: song.songMP3,
-            singerName: song.singerName,
-            album: song.album,
-            movie: song.movie,
-            like:song.like,
+        const existingRecentSong = await RecentSong.findOne({ song:id});
+        
+        if (existingRecentSong) {
+            // If a RecentSong already exists, return it
+            await RecentSong.deleteMany({song:id});
+        }
+        
+        // Create a new RecentSong document
+        const recentSong = new RecentSong({
+            song: id // Reference to the found song
         });
-        res.json(song); // Send the song data as JSON
-    } else {
-        res.status(404).send("Song not found");
+        
+        // Save the RecentSong document
+        await recentSong.save();
+        
+        // Respond with the newly created RecentSong
+        res.status(201).json(recentSong);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Server error" });
     }
 });
+
 
 
 app.get("/api/likeSong/:id", async (req, res) => {
@@ -120,24 +126,42 @@ app.get("/api/likeSong/:id", async (req, res) => {
     }
 });
 
-app.get("/api/library/:title", async (req, res) => {
-    try {
-        const { title } = req.params; // Extract the title from the URL
-        console.log("API request for title:", title);
-        
+app.get("/showLikedSongs" , async (req , res)=>{
+    console.log("show liked songs")
+    const likedSongs = await Song.find({like : true});
+    const libraries = await Library.find({});
+
+    res.render("project.ejs" , {name : "showLikeSongs" , libraries , likedSongs});
+})
+
+
+app.get("/library/:title", async (req, res) => {
+    try{
+        const {title} = req.params;
+        console.log("show library : " , title);
         const libraries = await Library.find({});
-        
-        // res.render("project.ejs" , {name : "library" , libraries:libraries})
-        res.render("project.ejs", { name: "library", libraries });
-    } catch (error) {
-        console.error("Error while fetching the library:", error);
-        res.status(500).send("An error occurred");
+        const curr_library = Library.findOne({title : title})
+
+        res.render("project.ejs" ,{name:"library" , libraries});
+         
+    } catch(error){
+        console.log("error is coming for show library")
+        res.status(400).send("internal server problem")
     }
 });
+
+app.get("/artist_library/:singer" ,async (req , res)=>{
+    let {singer} = req.params;
+    console.log(singer)
+    const recentSongs = await recentSongs_func();
+    const libraries = await Library.find({});
+    res.render("project.ejs" , {name:"library" , libraries})
+})
 
   
 
 app.get("/yourlibrary" , async (req , res)=>{
+
     const libraries = await Library.find({});
 
     res.render("project.ejs" , {name : "your_library" , libraries:libraries});

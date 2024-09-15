@@ -23,7 +23,7 @@ body {
 
 .sidebar {
     /* width: 30vw; */
-    min-width: 250px;
+    min-width: 300px;
     background-color: black;
 }
 
@@ -278,7 +278,7 @@ input{
 }
 
 .your_library .add_button,
-.your_library .expand_button {
+.your_library .expand_button , .your_library .show_like_button {
     /* background-color: yellow; */
     /* height: 20px;
     width: 20px; */
@@ -515,7 +515,6 @@ input{
     height: 90%;
     width: 100%;
     overflow-y: auto;
-
 }
 
 .home_content::-webkit-scrollbar , .content-search::-webkit-scrollbar{
@@ -624,13 +623,20 @@ input[type="text"]{
 }
 
 
-.content-library h1{
+.content-library h1 , .likedSongs h1{
     padding: 0 10px;
     color: rgb(225, 217, 217);
-
+    background-color: (0, 0, 0, 0.5)
 }
 
 
 .search-section{
     height: auto !important;
+}
+
+.likedSongs{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    overflow-y: auto;
 }

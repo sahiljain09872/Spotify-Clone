@@ -1,0 +1,10 @@
+<div class="likedSongs artists_cards" style="display: flex; flex-direction: column; overflow-y: auto;">
+    <h1 style="display: block; background-color: rgba(0 , 0 , 0 , 0.5);">Liked Songs</h1>
+    <div class="likedSongs">
+    <% for(song of likedSongs) { %>
+        <%- include('../partials/song_card_square', { song: song }) %>
+    <% } %>
+    </div>
+
+    
+</div>

@@ -5,11 +5,25 @@ let expand_library_icon = document.querySelector(".expand_button i");
 let song_range = document.querySelector("#song_range");
 let volume_range = document.querySelector("#volume_control");
 let audio_player = document.querySelector(".player figure audio");
+let second_section_content_div = document.querySelector(".second-section .content div");
+
+let show_like_button = document.querySelector(".show_like_button");
 
 let libraries = document.querySelectorAll(".artist_library");
 
 // import Song from '../models/song.js';
 // import RecentSong from '../models/recent_song.js';
+// if (second_section_content_div.classList.contains("likedSongs")) {
+//   console.log("liked songs are visible")
+//   // Do something if the class "likedSongs" is present
+//   let show_like_button_icon = show_like_button.querySelector('i');
+//   add_class(show_like_button_icon , font-pink);
+//   // Add your logic here
+// } else {
+//   console.log("Element does not have the class 'likedSongs'");
+//   remove_class(show_like_button_icon , font-pink);
+// }
+
 
 let curr_song_img = document.querySelector(".curr_song #image");
 let curr_song_name = document.querySelector(".curr_song #song_name");
@@ -20,6 +34,8 @@ let search_input = document.querySelector('.search_song input');
 let more_player_controls = document.querySelector(
   ".player_helper_controls .more"
 );
+
+
 
 expand_button.addEventListener("click", () => {
   sidebar.classList.toggle("expand_sidebar");
@@ -41,6 +57,20 @@ expand_button.addEventListener("click", () => {
   expand_library_icon.classList.toggle("fa-arrow-right");
   expand_library_icon.classList.toggle("fa-arrow-left");
 });
+
+// show_like_button.addEventListener("click" , ()=>{
+//   console.log("show like button has been created");
+//   fetch("/api/showLikeSongs")
+//   .then(res =>{
+//     if(!res.ok){
+//       console.error("error occured in calling the show like songs");
+//     }
+//     console.log(res)
+//   })
+//   .catch(error => {
+//     console.log("error has been come" , error)
+//   })
+// })
 
 document.addEventListener("keydown", (event) => {
   console.log(event);
@@ -304,19 +334,21 @@ for (let i = 0; i < play_buttons.length; i++) {
 
       console.log("api call-->")
       fetch(`/api/song/${curr_song_id}`)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        })
-        .then(data => {
-          console.log("Song data:", data);
-          // Do something with the song data
-        })
-        .catch(error => {
-          console.error("There was a problem with the fetch operation:", error);
-        });
+  .then(response => {
+    // Check if the response status indicates success
+    if (!response.ok) {
+      // If the response is not OK, throw an error with status text
+      return response.json().then(errorInfo => {
+        throw new Error(`Network response was not ok: ${response.statusText} - ${errorInfo.message}`);
+      });
+    }
+    // Return the response data as JSON
+    return response.json();
+  })
+  
+  .catch(error => {
+    console.error("There was a problem with the fetch operation:", error);
+  });
       
 
       console.log("start_music-->")
@@ -368,25 +400,25 @@ for (let i = 0; i < like_buttons.length; i++) {
 }
 
 
-for(library of libraries){
+// for(library of libraries){
 
-  const library_title = library.getAttribute("title");
-  library.addEventListener("click" , ()=>{
-    console.log("library has been clicked :")
-    console.log(library_title);
-    fetch(`/api/library/${library_title}`)
-    .then(response => {
-      if(!response.ok){
-        throw new Error("Network response was not ok");
-      }
-      console.log(response);
+//   const library_title = library.getAttribute("title");
+//   library.addEventListener("click" , ()=>{
+//     console.log("library has been clicked :")
+//     console.log(library_title);
+//     fetch(`/api/library/${library_title}`)
+//     .then(response => {
+//       if(!response.ok){
+//         throw new Error("Network response was not ok");
+//       }
+//       console.log(response);
 
-    })
-    .catch(error => {
-      console.error("There was a problem with the fetch operation:", error);
-    });
-})
-}
+//     })
+//     .catch(error => {
+//       console.error("There was a problem with the fetch operation:", error);
+//     });
+// })
+// }
 
 function remove_class(element, class_name) {
   element.classList.remove(class_name);

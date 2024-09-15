@@ -6,6 +6,11 @@
 
       <button><i class="fa-solid fa-angle-left"></i></button>
       <button><i class="fa-solid fa-angle-right"></i></button>
+      <form action="/showLikedSongs">
+        <button class="show_like_button hover_effect" type="submit">
+            <i class="fa-solid fa-heart"></i>
+        </button>
+      </form>
 
       <% if(title=="search-content" ){ %>
         <form class="search_song" style="width: 280px" action="/searchSong">

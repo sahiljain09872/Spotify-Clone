@@ -15,13 +15,6 @@
         rel="stylesheet">
     <link rel="icon" href="./assets/logo.png">
     <link rel="stylesheet" href="project.css">
-    <!-- <link rel="stylesheet" href="base.css">
-    <link rel="stylesheet" href="layout.css">
-    <link rel="stylesheet" href="components.css">
-    <link rel="stylesheet" href="utilities.css">
-    <link rel="stylesheet" href="responsive.css">
-    <link rel="stylesheet" href="theme.css">
-    <link rel="stylesheet" href="pages.css"> -->
     <link rel="stylesheet" href="utility.css">
 </head>
 
@@ -43,8 +36,9 @@
             <div class="content">
                 <%- include("includes/content-header.ejs" , {title : name}) %>
 
+
                 <% if(name == "home-content"){ %>
-                    <%- include(`includes/${name}.ejs` , {recentSongs}) %>
+                    <%- include(`includes/${name}.ejs` , {recentSongs} , {mostViewedSongs}) %>
                 <% } %>
                 <% if(name == "search-content"){ %>
                     <%- include(`includes/${name}.ejs` , {songs} , {recentSongs}) %>
@@ -53,12 +47,16 @@
                     <%- include(`includes/${name}.ejs` , {libraries}) %>
                 <% } %>
                 <% if(name == "library"){ %>
-                    <%- include(`includes/${library}.ejs`, { libraries }) %>
+                    <%- include(`includes/your_library.ejs` , {libraries}) %>
+                <% } %>
+                
+                <% if(name == "showLikeSongs"){ %>
+                    <%- include(`includes/showLikeSongs.ejs`, { libraries } , {likedSongs}) %>
                 <% } %>
 
-                <% console.log(name) %>
+
+                <%- include("includes/player.ejs") %>
             </div>
-            <%- include("includes/player.ejs") %>
         </div>
     </div>
 
